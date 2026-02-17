@@ -4,8 +4,12 @@ extends Node
 signal card_played(card: CardData)
 signal enemy_acted(action: String, damage: int)
 signal battle_ended(won: bool)
+signal energy_changed(current: int, max_val: int)
 
 const CARDS_PER_TURN := 5
+const MAX_ENERGY := 3
+
+var energy: int = 0
 
 @onready var turn_system: TurnSystem = $TurnSystem
 @onready var deck_manager: DeckManager = $DeckManager
@@ -29,12 +33,18 @@ func setup(player: PlayerNode, enemy: EnemyNode, player_data: CharacterData) -> 
 func execute_card(card: CardData) -> void:
 	if not is_player_turn:
 		return
+	if energy < card.cost:
+		return
 	if card.card_type == "attack":
+		energy -= card.cost
+		energy_changed.emit(energy, MAX_ENERGY)
 		deck_manager.play_card(card)
 		enemy_node.take_damage(card.damage)
 		card_played.emit(card)
 	else:
 		if grid_manager.try_move(card.card_type):
+			energy -= card.cost
+			energy_changed.emit(energy, MAX_ENERGY)
 			deck_manager.play_card(card)
 			card_played.emit(card)
 
@@ -48,6 +58,8 @@ func end_player_turn() -> void:
 func _on_phase_changed(phase: TurnSystem.Phase) -> void:
 	match phase:
 		TurnSystem.Phase.PLAYER_START:
+			energy = MAX_ENERGY
+			energy_changed.emit(energy, MAX_ENERGY)
 			deck_manager.draw_cards(CARDS_PER_TURN)
 			turn_system.begin_player_turn()
 		TurnSystem.Phase.PLAYER_TURN:
