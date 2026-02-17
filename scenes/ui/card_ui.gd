@@ -28,6 +28,10 @@ func _update_display() -> void:
 	else:
 		self_modulate = Color(0.85, 0.85, 1.0)
 
+func set_playable(can_play: bool) -> void:
+	modulate.a = 1.0 if can_play else 0.5
+	mouse_filter = Control.MOUSE_FILTER_STOP if can_play else Control.MOUSE_FILTER_IGNORE
+
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		card_clicked.emit(card_data)

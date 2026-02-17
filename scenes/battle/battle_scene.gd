@@ -9,6 +9,7 @@ extends Node2D
 @onready var end_turn_button: Button = $CanvasLayer/EndTurnButton
 @onready var turn_label: Label = $CanvasLayer/TurnLabel
 @onready var result_label: Label = $CanvasLayer/ResultLabel
+@onready var energy_label: Label = $CanvasLayer/EnergyLabel
 @onready var battle_grid: BattleGrid = $BattleGrid
 
 var player_data: CharacterData = preload("res://data/characters/player.tres")
@@ -33,6 +34,10 @@ func _ready() -> void:
 
 	# Connect turn label
 	battle_manager.turn_system.phase_changed.connect(_on_phase_changed)
+
+	# Connect energy
+	battle_manager.energy_changed.connect(_on_energy_changed)
+	battle_manager.energy_changed.connect(hand_ui.update_energy)
 
 	# Connect battle end
 	battle_manager.battle_ended.connect(_on_battle_ended)
@@ -63,6 +68,9 @@ func _on_player_moved(new_pos: Vector2i) -> void:
 	var gm := battle_manager.grid_manager
 	player_node.position = gm.grid_to_screen(new_pos)
 	battle_grid.update_position(new_pos)
+
+func _on_energy_changed(current: int, max_val: int) -> void:
+	energy_label.text = "%d / %d" % [current, max_val]
 
 func _on_intent_changed(_intent: String) -> void:
 	pass # IntentLabel on EnemyNode handles its own display
