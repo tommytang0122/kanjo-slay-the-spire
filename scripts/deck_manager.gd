@@ -3,44 +3,32 @@ extends Node
 
 signal hand_updated(hand: Array[CardData])
 
-var draw_pile: Array[CardData] = []
-var hand: Array[CardData] = []
-var discard_pile: Array[CardData] = []
+const HAND_SIZE := 4
+
+var queue: Array[CardData] = []
+
+var hand: Array[CardData]:
+	get:
+		var result: Array[CardData] = []
+		for i in mini(HAND_SIZE, queue.size()):
+			result.append(queue[i])
+		return result
 
 func setup(deck: Array[CardData]) -> void:
-	draw_pile.clear()
-	hand.clear()
-	discard_pile.clear()
+	queue.clear()
 	for card in deck:
-		draw_pile.append(card)
-	_shuffle_draw_pile()
-
-func draw_cards(count: int) -> void:
-	for i in count:
-		if draw_pile.is_empty():
-			_reshuffle_discard_into_draw()
-		if draw_pile.is_empty():
-			break
-		hand.append(draw_pile.pop_back())
+		queue.append(card)
 	hand_updated.emit(hand)
 
 func play_card(card: CardData) -> void:
-	var idx := hand.find(card)
+	var idx := -1
+	for i in mini(HAND_SIZE, queue.size()):
+		if queue[i] == card:
+			idx = i
+			break
 	if idx == -1:
 		return
-	hand.remove_at(idx)
-	discard_pile.append(card)
+	var played := queue[idx]
+	queue.remove_at(idx)
+	queue.append(played)
 	hand_updated.emit(hand)
-
-func discard_hand() -> void:
-	discard_pile.append_array(hand)
-	hand.clear()
-	hand_updated.emit(hand)
-
-func _shuffle_draw_pile() -> void:
-	draw_pile.shuffle()
-
-func _reshuffle_discard_into_draw() -> void:
-	draw_pile.append_array(discard_pile)
-	discard_pile.clear()
-	_shuffle_draw_pile()
