@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=4 format=3 uid="uid://bigqr746xvnbd"]
+
+[ext_resource type="Script" uid="uid://cnxelhfka3d2m" path="res://data/characters/character_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://uk6k11iggp1n" path="res://data/cards/card_data.gd" id="1_btt0u"]
+[ext_resource type="Resource" uid="uid://b3ak1li5ppcd1" path="res://data/cards/strike.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+character_name = "Player"
+max_hp = 50
+deck = Array[ExtResource("1_btt0u")]([ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2"), ExtResource("2")])

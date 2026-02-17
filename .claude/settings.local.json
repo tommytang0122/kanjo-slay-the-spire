@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp list:*)",
+      "Bash(CLAUDECODE= claude mcp list:*)",
+      "Bash(CLAUDECODE= claude mcp add godot-mcp -s user -- node /home/kanjo/godot-mcp/build/index.js -e GODOT_PATH=/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe)",
+      "Bash(CLAUDECODE= claude mcp remove godot-mcp -s user)",
+      "Bash(CLAUDECODE= claude mcp add godot-mcp -s user -e GODOT_PATH=/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe -- node /home/kanjo/godot-mcp/build/index.js)",
+      "mcp__godot-mcp__run_project",
+      "mcp__godot-mcp__get_debug_output",
+      "Bash(godot:*)",
+      "mcp__godot-mcp__get_godot_version",
+      "mcp__godot-mcp__launch_editor",
+      "Bash(tasklist.exe:*)",
+      "Bash(\"/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe\" --headless --path /mnt/c/workspace/kanjo-slay-the-spire --quit)",
+      "Bash(\"/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe\" --headless --path \"C:/workspace/kanjo-slay-the-spire\" --quit)"
+    ]
+  }
+}

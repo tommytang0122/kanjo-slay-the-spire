@@ -1,0 +1,168 @@
+[gd_scene load_steps=9 format=3 uid="uid://rlm3f70wn5j"]
+
+[ext_resource type="Script" uid="uid://7j8adtg8swha" path="res://scenes/battle/battle_scene.gd" id="1"]
+[ext_resource type="Script" uid="uid://b4us838ql3pdf" path="res://scenes/characters/player_node.gd" id="2"]
+[ext_resource type="Script" uid="uid://bpj8nrx8inet" path="res://scenes/characters/enemy_node.gd" id="3"]
+[ext_resource type="Script" uid="uid://b23ntl1oo1akx" path="res://scripts/battle_manager.gd" id="4"]
+[ext_resource type="Script" uid="uid://b2tr1v8bhqbga" path="res://scripts/turn_system.gd" id="5"]
+[ext_resource type="Script" uid="uid://ryoho6ks1gi" path="res://scripts/deck_manager.gd" id="6"]
+[ext_resource type="Script" uid="uid://d03bqygh6kxc7" path="res://scenes/ui/health_bar.gd" id="7"]
+[ext_resource type="Script" uid="uid://bdn2qhgyl8p8i" path="res://scenes/ui/hand_ui.gd" id="8"]
+
+[node name="BattleScene" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.15, 0.15, 0.2, 1)
+
+[node name="PlayerNode" type="Node2D" parent="."]
+position = Vector2(200, 350)
+script = ExtResource("2")
+
+[node name="Sprite2D" type="ColorRect" parent="PlayerNode"]
+offset_left = -30.0
+offset_top = -50.0
+offset_right = 30.0
+offset_bottom = 50.0
+color = Color(0.2, 0.5, 0.8, 1)
+
+[node name="PlayerLabel" type="Label" parent="PlayerNode"]
+offset_left = -30.0
+offset_top = 55.0
+offset_right = 30.0
+offset_bottom = 75.0
+text = "Player"
+horizontal_alignment = 1
+
+[node name="EnemyNode" type="Node2D" parent="."]
+position = Vector2(900, 300)
+script = ExtResource("3")
+
+[node name="Sprite2D" type="ColorRect" parent="EnemyNode"]
+offset_left = -35.0
+offset_top = -40.0
+offset_right = 35.0
+offset_bottom = 40.0
+color = Color(0.7, 0.2, 0.2, 1)
+
+[node name="EnemyLabel" type="Label" parent="EnemyNode"]
+offset_left = -35.0
+offset_top = 45.0
+offset_right = 35.0
+offset_bottom = 65.0
+text = "Slime"
+horizontal_alignment = 1
+
+[node name="IntentLabel" type="Label" parent="EnemyNode"]
+offset_left = -60.0
+offset_top = -70.0
+offset_right = 60.0
+offset_bottom = -45.0
+horizontal_alignment = 1
+
+[node name="BattleManager" type="Node" parent="."]
+script = ExtResource("4")
+
+[node name="TurnSystem" type="Node" parent="BattleManager"]
+script = ExtResource("5")
+
+[node name="DeckManager" type="Node" parent="BattleManager"]
+script = ExtResource("6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHealthBar" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 500.0
+offset_right = 180.0
+offset_bottom = 530.0
+script = ExtResource("7")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/PlayerHealthBar"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 24.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerHealthBar"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 24.0
+text = "0 / 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyHealthBar" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 825.0
+offset_top = 200.0
+offset_right = 975.0
+offset_bottom = 230.0
+script = ExtResource("7")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/EnemyHealthBar"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 24.0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/EnemyHealthBar"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 24.0
+text = "0 / 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HandUI" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -160.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+script = ExtResource("8")
+
+[node name="EndTurnButton" type="Button" parent="CanvasLayer"]
+offset_left = 1020.0
+offset_top = 450.0
+offset_right = 1120.0
+offset_bottom = 490.0
+text = "End Turn"
+
+[node name="TurnLabel" type="Label" parent="CanvasLayer"]
+offset_left = 500.0
+offset_top = 10.0
+offset_right = 652.0
+offset_bottom = 40.0
+text = "Turn 1"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -30.0
+offset_right = 150.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 32
+text = "VICTORY!"
+horizontal_alignment = 1
+vertical_alignment = 1

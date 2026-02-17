@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=3 format=3 uid="uid://cov81i6tet0nr"]
+
+[ext_resource type="Script" uid="uid://cnxelhfka3d2m" path="res://data/characters/character_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://uk6k11iggp1n" path="res://data/cards/card_data.gd" id="1_qcv52"]
+
+[resource]
+script = ExtResource("1")
+character_name = "Slime"
+max_hp = 30
+deck = Array[ExtResource("1_qcv52")]([])

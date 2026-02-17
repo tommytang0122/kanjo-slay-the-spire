@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://b3ak1li5ppcd1"]
+
+[ext_resource type="Script" uid="uid://uk6k11iggp1n" path="res://data/cards/card_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+card_name = "Strike"
+damage = 6
+cost = 1
+description = "Deal 6 damage."

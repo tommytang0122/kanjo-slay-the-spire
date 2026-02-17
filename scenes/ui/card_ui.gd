@@ -1,0 +1,29 @@
+class_name CardUI
+extends PanelContainer
+
+signal card_clicked(card: CardData)
+
+var card_data: CardData
+
+@onready var name_label: Label = $VBoxContainer/NameLabel
+@onready var damage_label: Label = $VBoxContainer/DamageLabel
+@onready var cost_label: Label = $VBoxContainer/CostLabel
+
+func setup(data: CardData) -> void:
+	card_data = data
+	if name_label:
+		_update_display()
+
+func _ready() -> void:
+	if card_data:
+		_update_display()
+	gui_input.connect(_on_gui_input)
+
+func _update_display() -> void:
+	name_label.text = card_data.card_name
+	damage_label.text = card_data.description
+	cost_label.text = "Cost: %d" % card_data.cost
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		card_clicked.emit(card_data)
