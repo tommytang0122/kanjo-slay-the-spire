@@ -16,12 +16,12 @@ var enemy_data: CharacterData = preload("res://data/characters/slime.tres")
 func _ready() -> void:
 	result_label.visible = false
 
-	player_node.setup(player_data)
-	enemy_node.setup(enemy_data)
-
-	# Connect HP bars
+	# Connect HP bars before setup so initial hp_changed signals are received
 	player_node.hp_changed.connect(player_health_bar.update_hp)
 	enemy_node.hp_changed.connect(enemy_health_bar.update_hp)
+
+	player_node.setup(player_data)
+	enemy_node.setup(enemy_data)
 
 	# Connect hand UI
 	battle_manager.deck_manager.hand_updated.connect(hand_ui.update_hand)

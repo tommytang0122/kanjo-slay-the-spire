@@ -13,7 +13,8 @@
       "mcp__godot-mcp__launch_editor",
       "Bash(tasklist.exe:*)",
       "Bash(\"/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe\" --headless --path /mnt/c/workspace/kanjo-slay-the-spire --quit)",
-      "Bash(\"/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe\" --headless --path \"C:/workspace/kanjo-slay-the-spire\" --quit)"
+      "Bash(\"/mnt/c/workspace/Godot_v4.4.1-stable_win64/Godot_v4.4.1-stable_win64_console.exe\" --headless --path \"C:/workspace/kanjo-slay-the-spire\" --quit)",
+      "Bash(git checkout:*)"
     ]
   }
 }

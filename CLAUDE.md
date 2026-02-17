@@ -19,6 +19,10 @@ godot --path /mnt/c/workspace/kanjo-slay-the-spire res://path/to/scene.tscn
 godot --headless --path /mnt/c/workspace/kanjo-slay-the-spire --export-release "<preset>" output_path
 ```
 
+## Workflow
+
+- **Always create a git branch before writing code.** Before starting any implementation task, create a new branch from the current branch so changes can be reverted cleanly. Only commit to `main` after the work is verified.
+
 ## Conventions
 
 - Line endings: LF (enforced via `.gitattributes`)
