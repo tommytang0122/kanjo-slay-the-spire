@@ -9,6 +9,7 @@ const CARDS_PER_TURN := 5
 
 @onready var turn_system: TurnSystem = $TurnSystem
 @onready var deck_manager: DeckManager = $DeckManager
+@onready var grid_manager: GridManager = $GridManager
 
 var player_node: PlayerNode
 var enemy_node: EnemyNode
@@ -28,9 +29,14 @@ func setup(player: PlayerNode, enemy: EnemyNode, player_data: CharacterData) -> 
 func execute_card(card: CardData) -> void:
 	if not is_player_turn:
 		return
-	deck_manager.play_card(card)
-	enemy_node.take_damage(card.damage)
-	card_played.emit(card)
+	if card.card_type == "attack":
+		deck_manager.play_card(card)
+		enemy_node.take_damage(card.damage)
+		card_played.emit(card)
+	else:
+		if grid_manager.try_move(card.card_type):
+			deck_manager.play_card(card)
+			card_played.emit(card)
 
 func end_player_turn() -> void:
 	if not is_player_turn:

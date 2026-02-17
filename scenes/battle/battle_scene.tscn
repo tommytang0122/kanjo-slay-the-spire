@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rlm3f70wn5j"]
+[gd_scene load_steps=11 format=3 uid="uid://rlm3f70wn5j"]
 
 [ext_resource type="Script" uid="uid://7j8adtg8swha" path="res://scenes/battle/battle_scene.gd" id="1"]
 [ext_resource type="Script" uid="uid://b4us838ql3pdf" path="res://scenes/characters/player_node.gd" id="2"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://ryoho6ks1gi" path="res://scripts/deck_manager.gd" id="6"]
 [ext_resource type="Script" uid="uid://d03bqygh6kxc7" path="res://scenes/ui/health_bar.gd" id="7"]
 [ext_resource type="Script" uid="uid://bdn2qhgyl8p8i" path="res://scenes/ui/hand_ui.gd" id="8"]
+[ext_resource type="Script" uid="uid://drf2in3jyidnm" path="res://scenes/battle/battle_grid.gd" id="9"]
+[ext_resource type="Script" uid="uid://dnoaa01barfcy" path="res://scripts/grid_manager.gd" id="10"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1")
@@ -16,6 +18,10 @@ script = ExtResource("1")
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.15, 0.15, 0.2, 1)
+
+[node name="BattleGrid" type="Node2D" parent="."]
+position = Vector2(360, 36)
+script = ExtResource("9")
 
 [node name="PlayerNode" type="Node2D" parent="."]
 position = Vector2(200, 350)
@@ -70,6 +76,9 @@ script = ExtResource("5")
 
 [node name="DeckManager" type="Node" parent="BattleManager"]
 script = ExtResource("6")
+
+[node name="GridManager" type="Node" parent="BattleManager"]
+script = ExtResource("10")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

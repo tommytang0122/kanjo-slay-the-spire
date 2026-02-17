@@ -23,6 +23,10 @@ func _update_display() -> void:
 	name_label.text = card_data.card_name
 	damage_label.text = card_data.description
 	cost_label.text = "Cost: %d" % card_data.cost
+	if card_data.card_type == "attack":
+		self_modulate = Color(1.0, 0.85, 0.85)
+	else:
+		self_modulate = Color(0.85, 0.85, 1.0)
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:

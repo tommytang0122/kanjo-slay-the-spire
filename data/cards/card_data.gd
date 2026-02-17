@@ -5,3 +5,4 @@ extends Resource
 @export var damage: int = 0
 @export var cost: int = 1
 @export var description: String = ""
+@export var card_type: String = "attack"

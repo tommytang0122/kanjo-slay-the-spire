@@ -9,6 +9,7 @@ extends Node2D
 @onready var end_turn_button: Button = $CanvasLayer/EndTurnButton
 @onready var turn_label: Label = $CanvasLayer/TurnLabel
 @onready var result_label: Label = $CanvasLayer/ResultLabel
+@onready var battle_grid: BattleGrid = $BattleGrid
 
 var player_data: CharacterData = preload("res://data/characters/player.tres")
 var enemy_data: CharacterData = preload("res://data/characters/slime.tres")
@@ -39,6 +40,13 @@ func _ready() -> void:
 	# Connect enemy intent
 	enemy_node.intent_changed.connect(_on_intent_changed)
 
+	# Setup grid — player on left grid, enemy fixed on right
+	var gm := battle_manager.grid_manager
+	player_node.position = gm.grid_to_screen(gm.player_pos)
+	enemy_node.position = Vector2(900, 300)
+	battle_grid.update_position(gm.player_pos)
+	gm.player_moved.connect(_on_player_moved)
+
 	# Start battle
 	battle_manager.setup(player_node, enemy_node, player_data)
 
@@ -50,6 +58,11 @@ func _on_battle_ended(won: bool) -> void:
 	result_label.visible = true
 	result_label.text = "VICTORY!" if won else "DEFEAT..."
 	end_turn_button.disabled = true
+
+func _on_player_moved(new_pos: Vector2i) -> void:
+	var gm := battle_manager.grid_manager
+	player_node.position = gm.grid_to_screen(new_pos)
+	battle_grid.update_position(new_pos)
 
 func _on_intent_changed(_intent: String) -> void:
 	pass # IntentLabel on EnemyNode handles its own display

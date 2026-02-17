@@ -8,3 +8,4 @@ card_name = "Strike"
 damage = 6
 cost = 1
 description = "Deal 6 damage."
+card_type = "attack"
