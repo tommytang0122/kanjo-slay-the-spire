@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" uid="uid://uk6k11iggp1n" path="res://data/cards/card_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+card_name = "Move Right"
+damage = 0
+cost = 1
+description = "Move 1 tile right."
+card_type = "move_right"
