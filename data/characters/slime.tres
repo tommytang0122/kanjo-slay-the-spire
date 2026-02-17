@@ -8,3 +8,4 @@ script = ExtResource("1")
 character_name = "Slime"
 max_hp = 30
 deck = Array[ExtResource("1_qcv52")]([])
+attack_interval = 3.0

@@ -6,8 +6,6 @@ extends Node2D
 @onready var player_health_bar: HealthBar = $CanvasLayer/PlayerHealthBar
 @onready var enemy_health_bar: HealthBar = $CanvasLayer/EnemyHealthBar
 @onready var hand_ui: HandUI = $CanvasLayer/HandUI
-@onready var end_turn_button: Button = $CanvasLayer/EndTurnButton
-@onready var turn_label: Label = $CanvasLayer/TurnLabel
 @onready var result_label: Label = $CanvasLayer/ResultLabel
 @onready var energy_label: Label = $CanvasLayer/EnergyLabel
 @onready var battle_grid: BattleGrid = $BattleGrid
@@ -29,12 +27,6 @@ func _ready() -> void:
 	battle_manager.deck_manager.hand_updated.connect(hand_ui.update_hand)
 	hand_ui.card_selected.connect(battle_manager.execute_card)
 
-	# Connect end turn button
-	end_turn_button.pressed.connect(battle_manager.end_player_turn)
-
-	# Connect turn label
-	battle_manager.turn_system.phase_changed.connect(_on_phase_changed)
-
 	# Connect energy
 	battle_manager.energy_changed.connect(_on_energy_changed)
 	battle_manager.energy_changed.connect(hand_ui.update_energy)
@@ -53,16 +45,11 @@ func _ready() -> void:
 	gm.player_moved.connect(_on_player_moved)
 
 	# Start battle
-	battle_manager.setup(player_node, enemy_node, player_data)
-
-func _on_phase_changed(phase: TurnSystem.Phase) -> void:
-	turn_label.text = "Turn %d" % battle_manager.turn_system.turn_number
-	end_turn_button.disabled = phase != TurnSystem.Phase.PLAYER_TURN
+	battle_manager.setup(player_node, enemy_node, player_data, enemy_data)
 
 func _on_battle_ended(won: bool) -> void:
 	result_label.visible = true
 	result_label.text = "VICTORY!" if won else "DEFEAT..."
-	end_turn_button.disabled = true
 
 func _on_player_moved(new_pos: Vector2i) -> void:
 	var gm := battle_manager.grid_manager
@@ -70,7 +57,7 @@ func _on_player_moved(new_pos: Vector2i) -> void:
 	battle_grid.update_position(new_pos)
 
 func _on_energy_changed(current: int, max_val: int) -> void:
-	energy_label.text = "%d / %d" % [current, max_val]
+	energy_label.text = "Elixir: %d / %d" % [current, max_val]
 
 func _on_intent_changed(_intent: String) -> void:
 	pass # IntentLabel on EnemyNode handles its own display
