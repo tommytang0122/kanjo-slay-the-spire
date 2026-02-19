@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://rlm3f70wn5j"]
+[gd_scene load_steps=12 format=3 uid="uid://rlm3f70wn5j"]
 
 [ext_resource type="Script" uid="uid://7j8adtg8swha" path="res://scenes/battle/battle_scene.gd" id="1"]
 [ext_resource type="Script" uid="uid://b4us838ql3pdf" path="res://scenes/characters/player_node.gd" id="2"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://bdn2qhgyl8p8i" path="res://scenes/ui/hand_ui.gd" id="8"]
 [ext_resource type="Script" uid="uid://drf2in3jyidnm" path="res://scenes/battle/battle_grid.gd" id="9"]
 [ext_resource type="Script" uid="uid://dnoaa01barfcy" path="res://scripts/grid_manager.gd" id="10"]
+[ext_resource type="Script" path="res://scenes/ui/team_panel.gd" id="11"]
+[ext_resource type="Script" path="res://scenes/ui/battlefield_drop.gd" id="12"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1")
@@ -22,23 +24,76 @@ color = Color(0.15, 0.15, 0.2, 1)
 position = Vector2(360, 36)
 script = ExtResource("9")
 
-[node name="PlayerNode" type="Node2D" parent="."]
-position = Vector2(200, 350)
+[node name="TeamMember0" type="Node2D" parent="."]
 script = ExtResource("2")
 
-[node name="Sprite2D" type="ColorRect" parent="PlayerNode"]
-offset_left = -30.0
-offset_top = -50.0
-offset_right = 30.0
-offset_bottom = 50.0
-color = Color(0.2, 0.5, 0.8, 1)
+[node name="Sprite2D" type="ColorRect" parent="TeamMember0"]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.2, 0.4, 0.8, 1)
 
-[node name="PlayerLabel" type="Label" parent="PlayerNode"]
-offset_left = -30.0
-offset_top = 55.0
-offset_right = 30.0
-offset_bottom = 75.0
-text = "Player"
+[node name="MemberLabel" type="Label" parent="TeamMember0"]
+offset_left = -20.0
+offset_top = 22.0
+offset_right = 20.0
+offset_bottom = 38.0
+text = "Tank"
+horizontal_alignment = 1
+
+[node name="TeamMember1" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="Sprite2D" type="ColorRect" parent="TeamMember1"]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.2, 0.8, 0.3, 1)
+
+[node name="MemberLabel" type="Label" parent="TeamMember1"]
+offset_left = -20.0
+offset_top = 22.0
+offset_right = 20.0
+offset_bottom = 38.0
+text = "Healer"
+horizontal_alignment = 1
+
+[node name="TeamMember2" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="Sprite2D" type="ColorRect" parent="TeamMember2"]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.8, 0.6, 0.2, 1)
+
+[node name="MemberLabel" type="Label" parent="TeamMember2"]
+offset_left = -20.0
+offset_top = 22.0
+offset_right = 20.0
+offset_bottom = 38.0
+text = "DPS1"
+horizontal_alignment = 1
+
+[node name="TeamMember3" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="Sprite2D" type="ColorRect" parent="TeamMember3"]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.7, 0.2, 0.7, 1)
+
+[node name="MemberLabel" type="Label" parent="TeamMember3"]
+offset_left = -20.0
+offset_top = 22.0
+offset_right = 20.0
+offset_bottom = 38.0
+text = "DPS2"
 horizontal_alignment = 1
 
 [node name="EnemyNode" type="Node2D" parent="."]
@@ -78,30 +133,20 @@ script = ExtResource("10")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PlayerHealthBar" type="Control" parent="CanvasLayer"]
-custom_minimum_size = Vector2(150, 30)
-layout_mode = 3
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 500.0
-offset_right = 180.0
-offset_bottom = 530.0
-script = ExtResource("7")
+[node name="TeamPanel" type="VBoxContainer" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 220.0
+offset_bottom = 300.0
+script = ExtResource("11")
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/PlayerHealthBar"]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 24.0
-value = 100.0
-show_percentage = false
-
-[node name="Label" type="Label" parent="CanvasLayer/PlayerHealthBar"]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 24.0
-text = "0 / 0"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="BattlefieldDrop" type="ColorRect" parent="CanvasLayer"]
+offset_left = 360.0
+offset_top = 36.0
+offset_right = 792.0
+offset_bottom = 468.0
+color = Color(0, 0, 0, 0)
+script = ExtResource("12")
 
 [node name="EnemyHealthBar" type="Control" parent="CanvasLayer"]
 custom_minimum_size = Vector2(150, 30)
@@ -143,12 +188,21 @@ alignment = 1
 script = ExtResource("8")
 
 [node name="EnergyLabel" type="Label" parent="CanvasLayer"]
-offset_left = 30.0
-offset_top = 465.0
-offset_right = 180.0
-offset_bottom = 495.0
+offset_left = 10.0
+offset_top = 310.0
+offset_right = 220.0
+offset_bottom = 340.0
 theme_override_font_sizes/font_size = 20
 text = "Elixir: 0 / 0"
+horizontal_alignment = 1
+
+[node name="CardsPlayedLabel" type="Label" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = 345.0
+offset_right = 220.0
+offset_bottom = 370.0
+theme_override_font_sizes/font_size = 16
+text = "N: 0"
 horizontal_alignment = 1
 
 [node name="ResultLabel" type="Label" parent="CanvasLayer"]

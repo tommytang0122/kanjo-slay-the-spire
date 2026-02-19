@@ -9,3 +9,4 @@ damage = 0
 cost = 1
 description = "Move 1 tile right."
 card_type = "move_right"
+target_mode = "none"

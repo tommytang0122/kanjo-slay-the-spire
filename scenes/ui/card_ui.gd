@@ -1,9 +1,8 @@
 class_name CardUI
 extends PanelContainer
 
-signal card_clicked(card: CardData)
-
 var card_data: CardData
+var _playable: bool = true
 
 @onready var name_label: Label = $VBoxContainer/NameLabel
 @onready var damage_label: Label = $VBoxContainer/DamageLabel
@@ -17,21 +16,41 @@ func setup(data: CardData) -> void:
 func _ready() -> void:
 	if card_data:
 		_update_display()
-	gui_input.connect(_on_gui_input)
 
 func _update_display() -> void:
 	name_label.text = card_data.card_name
 	damage_label.text = card_data.description
 	cost_label.text = "Cost: %d" % card_data.cost
-	if card_data.card_type == "attack":
-		self_modulate = Color(1.0, 0.85, 0.85)
-	else:
-		self_modulate = Color(0.85, 0.85, 1.0)
+	match card_data.card_type:
+		"attack":
+			self_modulate = Color(1.0, 0.85, 0.85)  # red
+		"shield_up":
+			self_modulate = Color(0.85, 0.85, 1.0)  # blue
+		"area_heal":
+			self_modulate = Color(0.85, 1.0, 0.85)  # green
+		"final_hit":
+			self_modulate = Color(1.0, 0.85, 1.0)  # purple
+		_:
+			self_modulate = Color(0.9, 0.9, 0.8)  # beige for moves
 
 func set_playable(can_play: bool) -> void:
-	modulate.a = 1.0 if can_play else 0.5
-	mouse_filter = Control.MOUSE_FILTER_STOP if can_play else Control.MOUSE_FILTER_IGNORE
+	_playable = can_play
+	_update_playable_display()
 
-func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		card_clicked.emit(card_data)
+func _update_playable_display() -> void:
+	modulate.a = 1.0 if _playable else 0.5
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	if not _playable:
+		return null
+	var preview := Label.new()
+	preview.text = card_data.card_name
+	preview.add_theme_font_size_override("font_size", 16)
+	set_drag_preview(preview)
+	return card_data
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_DRAG_BEGIN:
+		modulate.a = 0.3
+	elif what == NOTIFICATION_DRAG_END:
+		_update_playable_display()
