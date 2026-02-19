@@ -6,9 +6,9 @@ signal card_played_on_field(card: CardData)
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not data is CardData:
 		return false
-	# Reject move cards — they need a target member
+	# Reject cards that need an ally target (e.g. stack)
 	var card := data as CardData
-	return not card.card_type.begins_with("move_")
+	return card.target_mode != "ally"
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if data is CardData:

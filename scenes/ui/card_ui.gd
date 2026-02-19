@@ -30,8 +30,10 @@ func _update_display() -> void:
 			self_modulate = Color(0.85, 1.0, 0.85)  # green
 		"final_hit":
 			self_modulate = Color(1.0, 0.85, 1.0)  # purple
+		"two_pair", "four_split", "stack":
+			self_modulate = Color(0.95, 0.9, 0.75)  # gold for formations
 		_:
-			self_modulate = Color(0.9, 0.9, 0.8)  # beige for moves
+			self_modulate = Color(0.9, 0.9, 0.8)  # beige
 
 func set_playable(can_play: bool) -> void:
 	_playable = can_play

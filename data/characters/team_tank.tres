@@ -1,9 +1,12 @@
-[gd_resource type="Resource" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=3 format=3 uid="uid://niwjbe83w8vn"]
 
 [ext_resource type="Script" uid="uid://cnxelhfka3d2m" path="res://data/characters/character_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://uk6k11iggp1n" path="res://data/cards/card_data.gd" id="1_vdy5o"]
 
 [resource]
 script = ExtResource("1")
 character_name = "Tank"
 max_hp = 60
+deck = Array[ExtResource("1_vdy5o")]([])
 role = "tank"
+attack_interval = 3.0
