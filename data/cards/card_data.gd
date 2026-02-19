@@ -6,3 +6,4 @@ extends Resource
 @export var cost: int = 1
 @export var description: String = ""
 @export var card_type: String = "attack"
+@export var target_mode: String = "none"  # "none" or "ally"
