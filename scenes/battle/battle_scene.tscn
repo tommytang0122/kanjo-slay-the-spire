@@ -9,8 +9,8 @@
 [ext_resource type="Script" uid="uid://bdn2qhgyl8p8i" path="res://scenes/ui/hand_ui.gd" id="8"]
 [ext_resource type="Script" uid="uid://drf2in3jyidnm" path="res://scenes/battle/battle_grid.gd" id="9"]
 [ext_resource type="Script" uid="uid://dnoaa01barfcy" path="res://scripts/grid_manager.gd" id="10"]
-[ext_resource type="Script" path="res://scenes/ui/team_panel.gd" id="11"]
-[ext_resource type="Script" path="res://scenes/ui/battlefield_drop.gd" id="12"]
+[ext_resource type="Script" uid="uid://upwpbx8t30s2" path="res://scenes/ui/team_panel.gd" id="11"]
+[ext_resource type="Script" uid="uid://d1v07m831o0o6" path="res://scenes/ui/battlefield_drop.gd" id="12"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1")

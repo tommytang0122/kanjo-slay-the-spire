@@ -34,8 +34,9 @@ func setup(members: Array[PlayerNode], enemy: EnemyNode, player_data: CharacterD
 	_enemy_attack_interval = enemy_data.attack_interval
 
 	deck_manager.setup(player_data.deck)
-	for member in team_members:
-		member.died.connect(_on_member_died)
+	for i in team_members.size():
+		var member := team_members[i]
+		member.died.connect(_on_member_died.bind(i))
 	enemy_node.died.connect(_on_enemy_died)
 
 	elixir = INITIAL_ELIXIR
@@ -68,14 +69,12 @@ func execute_card(card: CardData, member_index: int = -1) -> void:
 		return
 
 	var card_type := card.card_type
-	var is_move := card_type.begins_with("move_")
 
-	# Move cards require a target member
-	if is_move and member_index < 0:
-		return
-	# Check target member is alive for moves
-	if is_move and member_index >= 0:
-		if member_index >= team_members.size() or not team_members[member_index].is_alive:
+	# Stack requires a target member
+	if card_type == "stack":
+		if member_index < 0 or member_index >= team_members.size():
+			return
+		if not team_members[member_index].is_alive:
 			return
 
 	match card_type:
@@ -110,15 +109,27 @@ func execute_card(card: CardData, member_index: int = -1) -> void:
 			enemy_node.take_damage(damage)
 			cards_played_count = 0
 			card_played.emit(card)
-		_:
-			# Move cards
-			if is_move:
-				if grid_manager.try_move_member(member_index, card_type):
-					elixir -= card.cost
-					energy_changed.emit(elixir, MAX_ELIXIR)
-					deck_manager.play_card(card)
-					cards_played_count += 1
-					card_played.emit(card)
+		"two_pair":
+			elixir -= card.cost
+			energy_changed.emit(elixir, MAX_ELIXIR)
+			deck_manager.play_card(card)
+			grid_manager.execute_two_pair()
+			cards_played_count += 1
+			card_played.emit(card)
+		"four_split":
+			elixir -= card.cost
+			energy_changed.emit(elixir, MAX_ELIXIR)
+			deck_manager.play_card(card)
+			grid_manager.execute_four_split()
+			cards_played_count += 1
+			card_played.emit(card)
+		"stack":
+			elixir -= card.cost
+			energy_changed.emit(elixir, MAX_ELIXIR)
+			deck_manager.play_card(card)
+			grid_manager.execute_stack(member_index)
+			cards_played_count += 1
+			card_played.emit(card)
 
 func _execute_enemy_attack() -> void:
 	if not _battle_active:
@@ -136,7 +147,8 @@ func _on_enemy_died() -> void:
 	_battle_active = false
 	battle_ended.emit(true)
 
-func _on_member_died() -> void:
+func _on_member_died(member_index: int) -> void:
+	grid_manager.mark_dead(member_index)
 	var all_dead := true
 	for member in team_members:
 		if member.is_alive:
